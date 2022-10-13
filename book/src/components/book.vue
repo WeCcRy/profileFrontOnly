@@ -1,6 +1,20 @@
 <template>
-  <h1 style="text-align: left;font-weight: bold;margin-left: 15px">2022</h1>
-  <a-table :columns="columns" :data-source="data" :pagination="false" rowKey="key">
+  <h1 style="text-align: left;font-weight: bold;margin-left: 15px">
+    <span style="padding-right: 10px">{{year}}</span>
+    <a-dropdown>
+    <template #overlay>
+      <a-menu @click="handleMenuClick">
+        <a-menu-item key="2021">2021</a-menu-item>
+        <a-menu-item key="2022">2022</a-menu-item>
+      </a-menu>
+    </template>
+    <a-button>
+      年份选择
+      <DownOutlined />
+    </a-button>
+  </a-dropdown>
+  </h1>
+  <a-table :columns="columns" :data-source="year=='2021'?data2021:data2022" :pagination="false" rowKey="key">
 
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
@@ -36,8 +50,9 @@
 </template>
 <script>
 import { DownOutlined } from '@ant-design/icons-vue';
-import { defineComponent } from 'vue';
-import booklist from '../assets/book2021'
+import { defineComponent,ref } from 'vue';
+import booklist2021 from '../assets/book2021'
+import booklist2022 from '../assets/book2022'
 const columns = [
   {
     title:"排名",
@@ -92,13 +107,18 @@ const columns = [
   },
 ];
 
-const data = booklist
+const data2021 = booklist2021
+const data2022 = booklist2022
 
 export default defineComponent({
   components: {
     DownOutlined,
   },
   setup() {
+    let year=ref("2021")
+    function handleMenuClick(e){
+      year.value=e.key
+    }
     const color=(name)=>{
       switch (name){
         case "小说":
@@ -125,7 +145,10 @@ export default defineComponent({
       }
     }
     return {
-      data,
+      handleMenuClick,
+      data2021,
+      data2022,
+      year,
       columns,
       color,
     };
