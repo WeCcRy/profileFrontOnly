@@ -37,7 +37,7 @@
 <script>
 import { DownOutlined } from '@ant-design/icons-vue';
 import { defineComponent } from 'vue';
-import booklist from '../assets/book2022'
+import booklist from '../assets/book2021'
 const columns = [
   {
     title:"排名",
@@ -66,7 +66,29 @@ const columns = [
   {
     title: '评分',
     key: 'rate',
-    dataIndex:'rate'
+    dataIndex:'rate',
+    customRender:(text)=> {
+      const rate=parseFloat(text.value)
+      let x=parseInt(rate)
+      let string=""
+      for(let i=0;i<x;i++){
+        string+="🌕"
+      }
+      let y=rate%1
+      if(y==0.5){
+        string+="🌗"
+      }else if(y<0.5&&y>0){
+        string+="🌘"
+      }else if(y>0.5){
+        string+="🌖"
+      }
+      if(string.length<10){
+        for(let i=string.length;i<10;i+=2){
+          string+="🌑"
+        }
+      }
+      return (string)
+    }
   },
 ];
 
@@ -81,31 +103,22 @@ export default defineComponent({
       switch (name){
         case "小说":
           return 'blue'
-          break;
         case "推理":
           return 'purple'
-          break;
         case "历史":
           return 'gold'
-          break;
         case "纪实":
           return 'orange'
-          break;
         case "非纪实":
           return 'cyan'
-          break;
         case "社会":
           return 'lime'
-          break;
         case "科幻":
           return 'red'
-          break;
         case "哲学":
           return 'pink'
-          break;
         case "博物科普":
           return 'green'
-          break;
         default:
           return 'default'
 
