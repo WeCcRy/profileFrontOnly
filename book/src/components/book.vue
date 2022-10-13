@@ -37,7 +37,7 @@
 <script>
 import { DownOutlined } from '@ant-design/icons-vue';
 import { defineComponent } from 'vue';
-import booklist from '../assets/book'
+import booklist from '../assets/book2022'
 const columns = [
   {
     title:"排名",
