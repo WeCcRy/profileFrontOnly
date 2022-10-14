@@ -137,7 +137,7 @@ export default defineComponent({
           return 'red'
         case "哲学":
           return 'pink'
-        case "博物科普":
+        case "非小说":
           return 'green'
         default:
           return 'default'
