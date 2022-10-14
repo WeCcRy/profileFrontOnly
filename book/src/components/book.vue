@@ -19,7 +19,15 @@
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
         <a>
-          {{ record.name }}
+          <a-popover :title="record.name" placement="bottom" @mouseenter="getDetails(record.ISBN)">
+            <template #content >
+              <p v-if="isLoading">加载中...</p>
+              <img :src="'https://images.weserv.nl/?url='+photoUrl" style="width: 81px;height: 117px;float: left">
+              <div style="float: left;width: 250px;padding-left: 10px" >{{bookDetail}}</div>
+              <div style="clear:both"></div>
+            </template>
+            {{ record.name }}
+          </a-popover>
         </a>
       </template>
       <template v-else-if="column.key === 'tags'">
@@ -51,6 +59,7 @@
 <script>
 import { DownOutlined } from '@ant-design/icons-vue';
 import { defineComponent,ref } from 'vue';
+import axios from 'axios'
 import booklist2021 from '../assets/book2021'
 import booklist2022 from '../assets/book2022'
 const columns = [
@@ -103,7 +112,9 @@ const columns = [
         }
       }
       return (string)
-    }
+    },
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.rate - b.rate,
   },
 ];
 
@@ -116,8 +127,29 @@ export default defineComponent({
   },
   setup() {
     let year=ref("2021")
+    let bookDetail=ref("")
+    let isLoading=ref(true)
+    let photoUrl=ref("")
+    //https://jike.xyz/jiekou/isbn.html#%E8%BF%94%E5%9B%9E%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E
+    //私人接口APIKEY，每日更新，需手动更改
+    const apikey="13294.206eaa07ed2ea8b374cf076241a2024c.f57bd57f2303f9557c040b0365744e1c"
     function handleMenuClick(e){
       year.value=e.key
+    }
+    function getDetails(ISBN){
+      isLoading.value=true
+      bookDetail.value=""
+      photoUrl.value=""
+      axios.get(`https://api.jike.xyz/situ/book/isbn/${ISBN}?apikey=${apikey}`)
+          .then(res=>{
+            isLoading.value=false
+            if(res.data.data.description.length>100) {
+              bookDetail.value = res.data.data.description.slice(0,100)+"..."
+            }
+            photoUrl.value=res.data.data.photoUrl
+          }).catch(err=>{
+        console.log(err);
+      })
     }
     const color=(name)=>{
       switch (name){
@@ -146,8 +178,12 @@ export default defineComponent({
     }
     return {
       handleMenuClick,
+      getDetails,
       data2021,
       data2022,
+      isLoading,
+      bookDetail,
+      photoUrl,
       year,
       columns,
       color,
