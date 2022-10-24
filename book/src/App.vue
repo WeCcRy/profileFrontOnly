@@ -1,15 +1,15 @@
 <template>
   <a-layout style="min-height: 100vh">
   <navLeft :isShow="isShow" @navChange="navChange"/>
-<!--    <transition name="back">-->
+    <transition name="back" mode="out-in">
       <homepage v-if="isShow==1"/>
+    </transition>
+<!--    <transition name="back" mode="out-in">-->
+    <book v-if="isShow==2"/>
 <!--    </transition>-->
-<!--    <transition name="back">-->
-  <book v-if="isShow==2"/>
-<!--    </transition>-->
-    <Transition name="fade" mode="out-in">
-      <component :is="activeComponent"></component>
-    </Transition>
+<!--    <Transition name="fade" mode="out-in">-->
+<!--      <component :is="activeComponent"></component>-->
+<!--    </Transition>-->
   </a-layout>
 </template>
 
