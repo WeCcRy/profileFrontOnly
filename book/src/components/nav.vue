@@ -4,15 +4,15 @@
       <span>WeCcRy</span>
     </div>
     <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" class="menu" @click="menuChange">
-      <a-menu-item key="1">
+      <a-menu-item key="0">
         <user-outlined />
         <span>个人信息</span>
       </a-menu-item>
-      <a-menu-item key="2">
+      <a-menu-item key="1">
         <book-outlined />
         <span>阅读报告</span>
       </a-menu-item>
-      <a-menu-item key="3">
+      <a-menu-item key="2">
         <team-outlined />
         <span>联系方式</span>
       </a-menu-item>
@@ -35,7 +35,7 @@ export default defineComponent({
   },
   setup(prop,context) {
     let collapsed=ref(true)
-    let selectedKeys= ref(['2'])
+    let selectedKeys= ref(['1'])
     function menuChange(target){
       context.emit('navChange',target.key)
     }
