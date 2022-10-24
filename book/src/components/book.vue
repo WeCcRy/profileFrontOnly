@@ -1,6 +1,8 @@
 <template>
-  <a-row type="flex" justify="space-around" align="middle">
-<!--      style="text-align: left;font-weight: bold;margin-left: 15px"-->
+  <a-layout>
+    <a-layout-head style="padding: 16px 10px 0 16px">
+      <a-row type="flex" justify="space-around" align="middle">
+      <!--      style="text-align: left;font-weight: bold;margin-left: 15px"-->
       <a-col :span="2"><a-typography-title :level="2">{{year}}<SmileTwoTone twoToneColor="#002FA7" style="margin-left: 15px"/></a-typography-title></a-col>
       <a-col :span="1" style="margin-bottom: 15px">
         <a-dropdown>
@@ -16,27 +18,28 @@
           </a-button>
         </a-dropdown>
       </a-col>
-    <a-col :span="18"></a-col>
-    <a-col :span="2"><a-button type="link" @click="showDrawer">我的图书报告</a-button></a-col>
-    <a-col :span="1"></a-col>
-  </a-row>
-  <a-table :columns="columns" :data-source="year=='2021'?data2021:data2022" :pagination="false" rowKey="key">
-
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'name'">
-        <a>
-          <a-popover :title="record.name" placement="bottom" @mouseenter="getDetails(record.ISBN)">
-            <template #content >
-              <p v-if="isLoading">加载中...</p>
-              <img :src="'https://images.weserv.nl/?url='+photoUrl" style="width: 81px;height: 117px;float: left" alt="图片加载中...">
-              <div style="float: left;width: 250px;padding-left: 10px" >{{bookDetail}}</div>
-              <div style="clear:both"></div>
-            </template>
-            {{ record.name }}
-          </a-popover>
-        </a>
-      </template>
-      <template v-else-if="column.key === 'tags'">
+      <a-col :span="18"></a-col>
+      <a-col :span="2"><a-button type="link" @click="showDrawer">我的图书报告</a-button></a-col>
+      <a-col :span="1"></a-col>
+    </a-row>
+    </a-layout-head>
+    <a-layout-content style="margin: 0 16px">
+      <a-table :columns="columns" :data-source="year=='2021'?data2021:data2022" :pagination="false" rowKey="key">
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'name'">
+            <a>
+              <a-popover :title="record.name" placement="bottom" @mouseenter="getDetails(record.ISBN)">
+                <template #content >
+                  <p v-if="isLoading">加载中...</p>
+                  <img :src="'https://images.weserv.nl/?url='+photoUrl" style="width: 81px;height: 117px;float: left" alt="图片加载中...">
+                  <div style="float: left;width: 250px;padding-left: 10px" >{{bookDetail}}</div>
+                  <div style="clear:both"></div>
+                </template>
+                {{ record.name }}
+              </a-popover>
+            </a>
+          </template>
+          <template v-else-if="column.key === 'tags'">
         <span>
           <a-tag
               v-for="tag in record.tags"
@@ -46,21 +49,22 @@
             {{tag}}
           </a-tag>
         </span>
-      </template>
-<!--      <template v-else-if="column.key === 'action'">-->
-<!--        <span>-->
-<!--          <a>Invite 一 {{ record.name }}</a>-->
-<!--          <a-divider type="vertical" />-->
-<!--          <a>Delete</a>-->
-<!--          <a-divider type="vertical" />-->
-<!--          <a class="ant-dropdown-link">-->
-<!--            More actions-->
-<!--            <down-outlined />-->
-<!--          </a>-->
-<!--        </span>-->
-<!--      </template>-->
-    </template>
-  </a-table>
+          </template>
+          <!--      <template v-else-if="column.key === 'action'">-->
+          <!--        <span>-->
+          <!--          <a>Invite 一 {{ record.name }}</a>-->
+          <!--          <a-divider type="vertical" />-->
+          <!--          <a>Delete</a>-->
+          <!--          <a-divider type="vertical" />-->
+          <!--          <a class="ant-dropdown-link">-->
+          <!--            More actions-->
+          <!--            <down-outlined />-->
+          <!--          </a>-->
+          <!--        </span>-->
+          <!--      </template>-->
+        </template>
+      </a-table>
+    </a-layout-content>
   <a-drawer width="640" placement="right" :closable="false" :visible="visible" @close="onClose">
     <p :style="[pStyle, pStyle2]">我的{{year}}</p>
     <p :style="pStyle">Personal</p>
@@ -71,6 +75,7 @@
       </a-col>
     </a-row>
   </a-drawer>
+  </a-layout>
 </template>
 <script>
 
@@ -145,7 +150,7 @@ export default defineComponent({
     SmileTwoTone,
   },
   setup() {
-    let year=ref("2021")
+    let year=ref("2022")
     let bookDetail=ref("")
     let isLoading=ref(true)
     let photoUrl=ref("")
