@@ -1,7 +1,7 @@
 <template>
   <a-layout-sider v-model:collapsed="collapsed" collapsible>
     <div class="logo">
-      <span>WeCcRy</span>
+      <span>deadfish</span>
     </div>
     <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline" class="menu" @click="menuChange">
       <a-menu-item key="0">
