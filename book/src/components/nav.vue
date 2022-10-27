@@ -12,10 +12,10 @@
         <book-outlined />
         <span>阅读报告</span>
       </a-menu-item>
-      <a-menu-item key="2">
-        <team-outlined />
-        <span>联系方式</span>
-      </a-menu-item>
+<!--      <a-menu-item key="2">-->
+<!--        <team-outlined />-->
+<!--        <span>联系方式</span>-->
+<!--      </a-menu-item>-->
     </a-menu>
   </a-layout-sider>
 </template>
@@ -31,7 +31,7 @@ export default defineComponent({
   components: {
     UserOutlined,
     BookOutlined,
-    TeamOutlined,
+    // TeamOutlined,
   },
   setup(prop,context) {
     let collapsed=ref(true)
